@@ -13,15 +13,15 @@ namespace GitHubUserInformationAPI.Repositories
 
         public async Task<GitHubUser> GetUser(string username)
         {
-            return await _db.GitHubUsers.Where(x => x.UserName == username).FirstAsync();
+            return await _db.GitHubUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<GitHubUser>> GetUsers()
+        public IQueryable<GitHubUser> GetUsers()
         {
-            return await _db.GitHubUsers.ToListAsync();
+            return _db.GitHubUsers.AsQueryable();
         }
-        public async Task<IEnumerable<GitHubUser>> GetUsers(IEnumerable<string> usernames)
+        public IQueryable<GitHubUser> GetUsers(IEnumerable<string> usernames)
         {
-            return await _db.GitHubUsers.Where(x => usernames.Contains(x.UserName)).ToListAsync();
+            return _db.GitHubUsers.Where(x => usernames.Contains(x.UserName)).AsQueryable();
         }
         public async Task<IEnumerable<GitHubUser>> SaveUsers(IEnumerable<GitHubUser> users)
         {

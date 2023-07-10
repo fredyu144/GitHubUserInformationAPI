@@ -22,19 +22,10 @@ namespace GitHubUserInformationAPI.Managers
             {
                 return new List<GitHubUserDto>();
             }
-            List<GitHubUserDto> user = new List<GitHubUserDto>();
 
             usernames = usernames.Select(x => x.ToLowerInvariant()).Distinct().ToList();
-            IEnumerable<GitHubUser>? existingUsers = await _gitHubUserRepository.GetUsers(usernames);
-            user = existingUsers.Select(x => new GitHubUserDto
-            {
-                Name = x.Name,
-                Company = x.Company,
-                Followers = x.Followers,
-                Login = x.Login,
-                PublicRepositories = x.PublicRepositories,
-                AverageFollowersPerRepository = x.AverageFollowersPerRepository
-            }).ToList();
+            IQueryable<GitHubUser>? existingUsers = _gitHubUserRepository.GetUsers(usernames);
+            List<GitHubUserDto> user = existingUsers.Select(GitHubUserMappings.GitHubUserToDto).ToList();
 
             List<GitHubUser> gitHubUsersToAdd = new List<GitHubUser>();
             foreach (string? newUser in usernames.Where(x => !existingUsers.Select(x => x.Login).Contains(x)))

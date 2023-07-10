@@ -3,6 +3,7 @@ global using GitHubUserInformationAPI.Model;
 global using GitHubUserInformationAPI.Services;
 global using GitHubUserInformationAPI.Repositories;
 global using GitHubUserInformationAPI.Managers;
+global using GitHubUserInformationAPI.MappingProfiles;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
