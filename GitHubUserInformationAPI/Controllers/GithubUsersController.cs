@@ -24,7 +24,7 @@ public class GitHubUsersController : ControllerBase
 
             return Ok(users.OrderBy(u => u.Name).ToList());
         }
-        catch()
+        catch
         {
             return BadRequest("something went wrong");
         }
